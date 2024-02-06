@@ -1,5 +1,7 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:towtruck_app/Screen/auth_page/login_page.dart';
+import 'package:towtruck_app/Screen/auth_page/signup_page.dart';
 import 'package:towtruck_app/Screen/initial_pages/initial_page.dart';
 
 void main() {
@@ -21,7 +23,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: InitialPage()
+      home: SignupPage()
     );
   }
 }
