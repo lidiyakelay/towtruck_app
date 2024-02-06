@@ -78,6 +78,24 @@ class LoginPage extends StatelessWidget {
                                 decoration: TextDecoration.none
                                ), )
                 ),
+              ) ,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text( "Don't have an account?", style:
+                  TextStyle(
+                  color: Colors.grey,
+                  fontWeight: FontWeight.normal,
+                  fontSize: 14,
+                  decoration: TextDecoration.none),),
+                  SizedBox(width: 5,),
+                   Text( "Sign Up", style:
+                  TextStyle(
+                  color: Colors.amber,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14,
+                  decoration: TextDecoration.none),),
+                ],
               )
              ],
       ),
