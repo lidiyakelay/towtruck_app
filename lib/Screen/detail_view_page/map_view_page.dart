@@ -80,7 +80,7 @@ class _MapViewPageState extends State<MapViewPage> {
                 ],
               ),
               Container(
-          margin: EdgeInsets.only(left: 10,right: 10, bottom: 30),
+          margin: EdgeInsets.only(left: 10,right: 10, bottom: 50),
           height:80 ,
           decoration: BoxDecoration(
             borderRadius:BorderRadius.circular(10),

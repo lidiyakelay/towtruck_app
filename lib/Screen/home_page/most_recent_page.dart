@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-
+import 'package:get/route_manager.dart';
+import 'package:towtruck_app/Screen/detail_view_page/detail_view_page.dart';
+import 'package:get/get.dart';
 class MostRecentPage extends StatefulWidget {
   const MostRecentPage({super.key});
 
@@ -131,6 +133,7 @@ class _MostRecentPageState extends State<MostRecentPage> {
         GestureDetector(
 
           onTap: (){
+            Get.to(DetailViewPage());
    
     },
           child: Align(
