@@ -3,9 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:towtruck_app/Screen/auth_page/login_page.dart';
 import 'package:towtruck_app/Screen/auth_page/signup_page.dart';
 import 'package:towtruck_app/Screen/detail_view_page/detail_view_page.dart';
+import 'package:towtruck_app/Screen/detail_view_page/map_view_page.dart';
 import 'package:towtruck_app/Screen/home_page/most_recent_page.dart';
 import 'package:towtruck_app/Screen/home_page/main_page.dart';
 import 'package:towtruck_app/Screen/initial_pages/initial_page.dart';
+import 'package:towtruck_app/Screen/notification_page/notification_page.dart';
+import 'package:towtruck_app/Screen/setting_page/setting_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -26,7 +29,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:DetailViewPage());
+      home:SettingPage());
   }
 }
 
