@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/route_manager.dart';
 
 class MapViewPage extends StatefulWidget {
   const MapViewPage({super.key});
@@ -45,10 +46,15 @@ class _MapViewPageState extends State<MapViewPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  CircleAvatar(
-                       radius: 25,
-                      backgroundColor: Color.fromARGB(153, 7, 7, 7),
-                       child: Icon(Icons.arrow_back, color: Colors.amber,size:20)),
+                  GestureDetector(
+                    onTap: () {
+                      Get.back();
+                    },
+                    child: CircleAvatar(
+                         radius: 25,
+                        backgroundColor: Color.fromARGB(153, 7, 7, 7),
+                         child: Icon(Icons.arrow_back, color: Colors.amber,size:20)),
+                  ),
                    Container(  
                     width: MediaQuery.of(context).size.width/1.3,
                         padding: EdgeInsets.only(left:20, right: 20, top: 10),  

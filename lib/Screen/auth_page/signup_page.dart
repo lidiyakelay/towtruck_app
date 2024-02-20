@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/route_manager.dart';
+import 'package:towtruck_app/Screen/home_page/home_page.dart';
 
 class SignupPage extends StatelessWidget {
   const SignupPage({super.key});
@@ -82,24 +84,29 @@ class SignupPage extends StatelessWidget {
               ),
               ],
              ),
-             Container(
-                height: 50,
-                width: double.maxFinite,
-                margin: EdgeInsets.only(left: 30,right: 30, top: 10, bottom: 10),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Color.fromARGB(228, 0, 0, 0),
+             GestureDetector(
+              onTap: () {
+                Get.to(HomePage());
+              },
+               child: Container(
+                  height: 50,
+                  width: double.maxFinite,
+                  margin: EdgeInsets.only(left: 30,right: 30, top: 10, bottom: 10),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Color.fromARGB(228, 0, 0, 0),
+                  ),
+                  child: Center(
+                    child: Text('Sign Up',style:
+                                 TextStyle(
+                                  color: Color.fromARGB(255, 244, 241, 241),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                  decoration: TextDecoration.none
+                                 ), )
+                  ),
                 ),
-                child: Center(
-                  child: Text('Sign Up',style:
-                               TextStyle(
-                                color: Color.fromARGB(255, 244, 241, 241),
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                                decoration: TextDecoration.none
-                               ), )
-                ),
-              ),
+             ),
                  Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

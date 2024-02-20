@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:towtruck_app/Screen/detail_view_page/detail_view_page.dart';
-import 'package:get/get.dart';
+
 class MostRecentPage extends StatefulWidget {
   const MostRecentPage({super.key});
 
@@ -130,17 +130,13 @@ class _MostRecentPageState extends State<MostRecentPage> {
               borderRadius: BorderRadius.circular(30
                   ), color: Colors.white,)
           ),
-        GestureDetector(
-
-          onTap: (){
-            Get.to(DetailViewPage());
-   
-    },
-          child: Align(
-          alignment: Alignment.topCenter,
-            child: Column(
-              children: [
-                Container(
+        Align(
+        alignment: Alignment.topCenter,
+          child: Column(
+            children: [
+              GestureDetector(
+                
+                child: Container(
                 height:130,
                 margin: EdgeInsets.only( right:20 ),
                 decoration: BoxDecoration(
@@ -154,70 +150,70 @@ class _MostRecentPageState extends State<MostRecentPage> {
                     )
                 ),
                       ),
-                Container(
-                  margin: EdgeInsets.only(top:2,left:0, right:20 ),
-                  padding: EdgeInsets.only(left: 15,right: 15),
-                  child:Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              ),
+              Container(
+                margin: EdgeInsets.only(top:2,left:0, right:20 ),
+                padding: EdgeInsets.only(left: 15,right: 15),
+                child:Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Icon(Icons.location_on, size:18,color: Colors.red,),
-                            SizedBox(width: 5,),
-                            Text('Texas, Interstate 105 ...',style:
-                              TextStyle(
-                              color: Color.fromARGB(176, 0, 0, 0),
-                              fontWeight: FontWeight.w500,
-                              fontSize: 12,
-                              decoration: TextDecoration.none
-                            ),)
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Icon(Icons.calendar_month,size: 18, color: Colors.green,),
-                            SizedBox(width: 5,),
-                            Text('Jan 25 2024',style:
-                              TextStyle(
-                              color: Color.fromARGB(176, 0, 0, 0),
-                              fontWeight: FontWeight.w500,
-                              fontSize: 12,
-                              decoration: TextDecoration.none
-                            ),)
-                          ],
-                        )
-                      ],
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Row(
-                              children: [
-                                Icon(Icons.lock_clock,size: 18, color: Colors.orange,),
-                                SizedBox(width: 5,),
-                                Text('08:24 pm',style:
-                                  TextStyle(
-                                  color: Color.fromARGB(176, 0, 0, 0),
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 12,
-                                  decoration: TextDecoration.none
-                                ),),
-                                 
-                              ],
-                            ),
-                      SizedBox(height: 25,)
-                      ],
-                    )
-                  ]) ,
-                )
-              ],
-            ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Icon(Icons.location_on, size:18,color: Colors.red,),
+                          SizedBox(width: 5,),
+                          Text('Texas, Interstate 105 ...',style:
+                            TextStyle(
+                            color: Color.fromARGB(176, 0, 0, 0),
+                            fontWeight: FontWeight.w500,
+                            fontSize: 12,
+                            decoration: TextDecoration.none
+                          ),)
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Icon(Icons.calendar_month,size: 18, color: Colors.green,),
+                          SizedBox(width: 5,),
+                          Text('Jan 25 2024',style:
+                            TextStyle(
+                            color: Color.fromARGB(176, 0, 0, 0),
+                            fontWeight: FontWeight.w500,
+                            fontSize: 12,
+                            decoration: TextDecoration.none
+                          ),)
+                        ],
+                      )
+                    ],
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Row(
+                            children: [
+                              Icon(Icons.lock_clock,size: 18, color: Colors.orange,),
+                              SizedBox(width: 5,),
+                              Text('08:24 pm',style:
+                                TextStyle(
+                                color: Color.fromARGB(176, 0, 0, 0),
+                                fontWeight: FontWeight.w500,
+                                fontSize: 12,
+                                decoration: TextDecoration.none
+                              ),),
+                               
+                            ],
+                          ),
+                    SizedBox(height: 25,)
+                    ],
+                  )
+                ]) ,
+              )
+            ],
           ),
         ),
         

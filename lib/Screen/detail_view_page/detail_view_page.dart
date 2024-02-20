@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/route_manager.dart';
+import 'package:towtruck_app/Screen/detail_view_page/map_view_page.dart';
 
 class DetailViewPage extends StatelessWidget {
   const DetailViewPage({super.key});
@@ -38,17 +40,22 @@ class DetailViewPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(
-                          margin: EdgeInsets.only(top: 20, left: 30, bottom:30),
-                          child: Row(
-                            children: [
-                           
-                                CircleAvatar(
-                              radius: 25,
-                              backgroundColor: Color.fromARGB(61, 255, 255, 255),
-                              child: Icon(Icons.arrow_back, color: Colors.amber,size:20)),
-                          
-                            ],
+                        GestureDetector(
+                          onTap: () {
+                            Get.back();
+                          },
+                          child: Container(
+                            margin: EdgeInsets.only(top: 20, left: 30, bottom:30),
+                            child: Row(
+                              children: [
+                             
+                                  CircleAvatar(
+                                radius: 25,
+                                backgroundColor: Color.fromARGB(61, 255, 255, 255),
+                                child: Icon(Icons.arrow_back, color: Colors.amber,size:20)),
+                            
+                              ],
+                            ),
                           ),
                         ),
                          Column(
@@ -288,26 +295,31 @@ class DetailViewPage extends StatelessWidget {
                         ),
                       ),
                     ),
-                  Container(
-                  width: 80,
-                  padding: EdgeInsets.only(top: 5,bottom: 5,left: 2,right: 2),
-                  margin: EdgeInsets.only(left: 20,right: 20, top: 10, bottom: 10),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                    color: Color.fromARGB(162, 255, 255, 255),),
-                    child: Row(
-                      children: [
-                        Icon(Icons.location_on, color: Colors.red,),
-                           Text('View Map',style:
-                                  TextStyle(
-                                   color: Color.fromARGB(255, 244, 241, 241),
-                                   fontWeight: FontWeight.normal,
-                                   fontSize: 10,
-                                   decoration: TextDecoration.none
-                                  ), ),
-                      ],
-                    ),
-                ),
+                  GestureDetector(
+                    onTap: () {
+                      Get.to(MapViewPage());
+                    },
+                    child: Container(
+                    width: 80,
+                    padding: EdgeInsets.only(top: 5,bottom: 5,left: 2,right: 2),
+                    margin: EdgeInsets.only(left: 20,right: 20, top: 10, bottom: 10),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30),
+                      color: Color.fromARGB(162, 255, 255, 255),),
+                      child: Row(
+                        children: [
+                          Icon(Icons.location_on, color: Colors.red,),
+                             Text('View Map',style:
+                                    TextStyle(
+                                     color: Color.fromARGB(255, 244, 241, 241),
+                                     fontWeight: FontWeight.normal,
+                                     fontSize: 10,
+                                     decoration: TextDecoration.none
+                                    ), ),
+                        ],
+                      ),
+                                    ),
+                  ),
                   ],
                 ),
               ) ,
