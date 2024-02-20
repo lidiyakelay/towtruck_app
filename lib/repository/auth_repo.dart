@@ -1,7 +1,7 @@
-import 'package:food_delivery/data/api/api_client.dart';
-import 'package:food_delivery/utils/app_constants.dart';
 import 'package:get/get_connect/http/src/response/response.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:towtruck_app/api/api_client.dart';
+import 'package:towtruck_app/utils/app_constants.dart';
 
 import '../../models/signin_body_model.dart';
 import '../../models/signup_body_model.dart';

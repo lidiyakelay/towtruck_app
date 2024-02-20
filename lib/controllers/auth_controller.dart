@@ -1,6 +1,7 @@
-import 'package:food_delivery/data/repository/auth_repo.dart';
-import 'package:food_delivery/models/signup_body_model.dart';
+
 import 'package:get/get.dart';
+import 'package:towtruck_app/models/signup_body_model.dart';
+import 'package:towtruck_app/repository/auth_repo.dart';
 
 import '../models/response_model.dart';
 import '../models/signin_body_model.dart';
