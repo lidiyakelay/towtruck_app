@@ -12,7 +12,7 @@ class SignInBody{
   Map<String, dynamic> toJson(){
     return{
 
-      "phone":this.phone,
+      "email":this.phone,
       "password":this.password,
     };
   }

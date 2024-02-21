@@ -12,11 +12,13 @@ import 'package:towtruck_app/Screen/initial_pages/initial_page.dart';
 import 'package:towtruck_app/Screen/notification_page/notification_page.dart';
 import 'package:towtruck_app/Screen/publish_post_page/publish_post_page.dart';
 import 'package:towtruck_app/Screen/setting_page/setting_page.dart';
+import 'helper/dependecies.dart' as dep;
 
-void main() {
-  runApp(const MyApp());
+Future <void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await dep.init();
+  runApp(MyApp());
 }
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 

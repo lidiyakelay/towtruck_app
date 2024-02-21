@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:towtruck_app/api/api_client.dart';
 import 'package:towtruck_app/utils/app_constants.dart';
 
+import 'package:http/http.dart' as http;
 import '../../models/signin_body_model.dart';
 import '../../models/signup_body_model.dart';
 
@@ -11,10 +12,10 @@ class AuthRepo{
   SharedPreferences sharedPreferences;
   AuthRepo({required this.apiClient, required this.sharedPreferences});
   Future<Response> registration(SignUpBody signUpBody) async {
-    return await apiClient.post(AppConstants.RegisterUrl, signUpBody.toJson());
+    return await apiClient.postData("https://tow.henonfm.com"+AppConstants.RegisterUrl, signUpBody.toJson());
   }
   Future<Response> login(SignInBody signInBody) async {
-    return await apiClient.post(AppConstants.LoginUrl, signInBody.toJson());
+    return await apiClient.postData("https://tow.henonfm.com"+AppConstants.LoginUrl, signInBody.toJson());
   }
   Future<bool> saveToken(String token) async{
     apiClient.token=token;
