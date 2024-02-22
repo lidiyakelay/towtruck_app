@@ -16,7 +16,7 @@ class AuthController extends GetxController implements GetxService{
      update();
      Response response =  await authRepo.registration(signUpBody);
      late ResponseModel responseModel;
-     if(response.statusCode==200){
+     if(response.statusCode==201){
       print('success');
        print('success'+response.body['token']);
       authRepo.saveToken(response.body['token']);
@@ -24,7 +24,7 @@ class AuthController extends GetxController implements GetxService{
      }
     else{
       print('fail');
-      responseModel=ResponseModel(false, response.statusText!);
+      responseModel=ResponseModel(false, response.body[0][0]!);
      }
     _isLoading=false;
     update();
