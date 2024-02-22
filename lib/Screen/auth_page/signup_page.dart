@@ -11,28 +11,46 @@ class SignupPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var emailController= TextEditingController();
+     var emailController= TextEditingController();
+    var firstNameController= TextEditingController();
     var passwordController= TextEditingController();
- 
+    var confirmpasswordController= TextEditingController();
+    var lastNameController= TextEditingController();
     void registration(AuthController  authController){
       String email= emailController.text.trim();
+      String firstName = firstNameController.text.trim();
       String password = passwordController.text.trim();
-     
+      String confirmPassword = passwordController.text.trim();
+      String lastName= lastNameController.text.trim();
       if(email.isEmpty){
         showCustomSnackbar('Type in your email address', title: 'Email');
       }
       else if(!GetUtils.isEmail(email)){
         showCustomSnackbar('Type in valid email address', title: 'Email');
       }
-      else if(password.isEmail){
+      else if(password.isEmpty){
+        showCustomSnackbar('Type in your password', title: 'Password');
+      }
+      else if(confirmPassword.isEmpty){
         showCustomSnackbar('Type in your password', title: 'Password');
       }
       else if(password.length<6){
         showCustomSnackbar("Password can't be less than six characters", title: 'Password');
       }
-     
+       else if(confirmPassword.length<6){
+        showCustomSnackbar("Password can't be less than six characters", title: 'Password');
+      }
+      else if(confirmPassword!=password){
+        showCustomSnackbar("password doesn't match", title: 'Password');
+      }
+      else if(lastName.isEmpty){
+        showCustomSnackbar('Type in your name', title: 'Name');
+      }
+      else if(firstName.isEmpty){
+        showCustomSnackbar('Type in your phone', title: 'Phone');
+      }
       else{
-        SignUpBody signUpBody= SignUpBody(email: email, password: password);
+        SignUpBody signUpBody= SignUpBody(email: email, password: password, firstName: firstName, lastName: lastName, confirmPassword: confirmPassword, );
         authController.registration(signUpBody).then((status){
           if(status.isSuccess){
             Get.to(HomePage());
@@ -62,6 +80,7 @@ class SignupPage extends StatelessWidget {
                       Padding(  
                     padding: EdgeInsets.only(left:30, right: 30, top: 30),  
                     child: TextField(  
+                      controller: emailController,
                       style: TextStyle(fontSize: 12),
                       cursorColor: Colors.grey, 
                       decoration: InputDecoration(  
@@ -72,7 +91,70 @@ class SignupPage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(20.0),
                       borderSide: BorderSide(width: 1, color: Colors.grey), ),
                         border: OutlineInputBorder(),  
-                        labelText: 'Username',  
+                        labelText: 'Email',  
+                        prefixIcon: Icon(Icons.person, color: Colors.amber,),
+                         labelStyle: TextStyle(
+                       color: Colors.grey,  ),
+                      ),  
+                    ),  
+                  ),
+                      Padding(  
+                    padding: EdgeInsets.only(left:30, right: 30, top: 30),  
+                    child: TextField(  
+                      controller: passwordController,
+                      style: TextStyle(fontSize: 12),
+                      cursorColor: Colors.grey, 
+                      decoration: InputDecoration(  
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      borderSide: BorderSide(width: 1, color: Colors.grey), ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      borderSide: BorderSide(width: 1, color: Colors.grey), ),
+                        border: OutlineInputBorder(),  
+                        labelText: 'Password',  
+                        prefixIcon: Icon(Icons.person, color: Colors.amber,),
+                         labelStyle: TextStyle(
+                       color: Colors.grey,  ),
+                      ),  
+                    ),  
+                  ),
+                   Padding(  
+                    padding: EdgeInsets.only(left:30, right: 30, top: 30),  
+                    child: TextField(  
+                      controller: firstNameController,
+                      style: TextStyle(fontSize: 12),
+                      cursorColor: Colors.grey, 
+                      decoration: InputDecoration(  
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      borderSide: BorderSide(width: 1, color: Colors.grey), ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      borderSide: BorderSide(width: 1, color: Colors.grey), ),
+                        border: OutlineInputBorder(),  
+                        labelText: 'First Name',  
+                        prefixIcon: Icon(Icons.person, color: Colors.amber,),
+                         labelStyle: TextStyle(
+                       color: Colors.grey,  ),
+                      ),  
+                    ),  
+                  ),
+                   Padding(  
+                    padding: EdgeInsets.only(left:30, right: 30, top: 30),  
+                    child: TextField(  
+                      controller: lastNameController,
+                      style: TextStyle(fontSize: 12),
+                      cursorColor: Colors.grey, 
+                      decoration: InputDecoration(  
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      borderSide: BorderSide(width: 1, color: Colors.grey), ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      borderSide: BorderSide(width: 1, color: Colors.grey), ),
+                        border: OutlineInputBorder(),  
+                        labelText: 'Last Name',  
                         prefixIcon: Icon(Icons.person, color: Colors.amber,),
                          labelStyle: TextStyle(
                        color: Colors.grey,  ),
@@ -82,6 +164,7 @@ class SignupPage extends StatelessWidget {
                   Padding(  
                     padding: EdgeInsets.only(left:30, right: 30, top: 30),  
                     child: TextField(  
+                      controller: confirmpasswordController,
                       style: TextStyle(fontSize: 12),
                       cursorColor: Colors.grey,
                       obscureText: true,  
@@ -93,7 +176,7 @@ class SignupPage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(20.0),
                       borderSide: BorderSide(width: 1, color: Colors.grey), ),
                         border: OutlineInputBorder(),  
-                        labelText: 'Password',  
+                        labelText: 'Confirm Password',  
                         prefixIcon: Icon(Icons.lock, color: Colors.amber,),
                          labelStyle: TextStyle(
                        color: Colors.grey,  ),
