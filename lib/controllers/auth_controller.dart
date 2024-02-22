@@ -19,7 +19,7 @@ class AuthController extends GetxController implements GetxService{
      if(response.statusCode==201){
       print('success');
        print('success'+response.body['token']);
-      authRepo.saveToken(response.body['token']);
+      //authRepo.saveToken(response.body['token']);
       responseModel=ResponseModel(true, response.body['token']);
      }
     else{
@@ -37,8 +37,8 @@ class AuthController extends GetxController implements GetxService{
    late ResponseModel responseModel;
    if(response.statusCode==200){
      print('got here');
-     authRepo.saveToken(response.body["access_token"]);
-     responseModel=ResponseModel(true, response.body["access_token"]);
+     //authRepo.saveToken(response.body["access_token"]);
+     responseModel=ResponseModel(true, 'success');
    }
    else{
      print('got here 2');

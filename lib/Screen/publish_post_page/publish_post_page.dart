@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:towtruck_app/Components/attachment_widget.dart';
 
 class PublishPostPage extends StatefulWidget {
   const PublishPostPage({super.key});
@@ -31,17 +32,7 @@ class _PublishPostPageState extends State<PublishPostPage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Container(
-            width: MediaQuery.of(context).size.width/1.4,
-            height: 200,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: const Color.fromARGB(227, 0, 0, 0),
-              image: DecorationImage(
-                image: AssetImage('assets/images/addphoto.png'))
-
-            ),
-          ),
+         AttachmentWidget(),
            Column(
              children: [
                Padding(  
@@ -49,7 +40,7 @@ class _PublishPostPageState extends State<PublishPostPage> {
                             child: TextField(  
                               style: TextStyle(fontSize: 12),
                               cursorColor: Colors.grey,
-                              obscureText: true,  
+                              obscureText: false,  
                               decoration: InputDecoration(
                                 contentPadding: EdgeInsets.only(top: 2, bottom: 2, left: 5, right: 5),
                                 hintText: 'Location',
@@ -75,7 +66,7 @@ class _PublishPostPageState extends State<PublishPostPage> {
                         child: TextField(  
                           style: TextStyle(fontSize: 12),
                           cursorColor: Colors.grey,
-                          obscureText: true,  
+                          obscureText: false,  
                           decoration: InputDecoration(
                             contentPadding: EdgeInsets.only(top: 2, bottom: 2, left: 5, right: 5),
                             hintText: 'Description',

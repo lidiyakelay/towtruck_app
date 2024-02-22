@@ -40,6 +40,10 @@ dependencies:
   shared_preferences: ^2.0.11
   get: any
   http: ^1.2.0
+  dotted_border: any
+  image_picker: any
+  modal_bottom_sheet: any
+  page_view_dot_indicator: any
 
 dev_dependencies:
   flutter_test:
