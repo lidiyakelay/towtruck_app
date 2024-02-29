@@ -13,18 +13,19 @@ class ApiClient extends GetConnect implements GetxService{
     timeout= Duration(seconds: 30);
     token=sharedPreferences.getString(AppConstants.Token)??"";
     _mainHeaders={
-      'Content-type': 'application/json; Charset=UTF-8',
+      
       'Authorization': 'Bearer $token'
     };
   }
   updateHeader(String token){
     _mainHeaders={
-      'Content-type': 'application/json; Charset=UTF-8',
+      
       'Authorization': 'Bearer $token'
     };
   }
   Future<Response> getData(String uri,{ Map<String, String>? headers}) async{
     try{
+      print(token);
      Response response= await get(uri, headers:headers??_mainHeaders) ;
      return response;
     }

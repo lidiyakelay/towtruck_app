@@ -1,7 +1,10 @@
 
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:towtruck_app/models/otp_body_model.dart';
 import 'package:towtruck_app/models/signup_body_model.dart';
 import 'package:towtruck_app/repository/auth_repo.dart';
+import 'package:towtruck_app/utils/app_constants.dart';
 
 import '../models/response_model.dart';
 import '../models/signin_body_model.dart';
@@ -20,11 +23,28 @@ class AuthController extends GetxController implements GetxService{
       print('success');
        print('success'+response.body['token']);
       //authRepo.saveToken(response.body['token']);
-      responseModel=ResponseModel(true, response.body['token']);
+      responseModel=ResponseModel(true, 'sucess');
      }
     else{
       print('fail');
       responseModel=ResponseModel(false, response.body[0][0]!);
+     }
+    _isLoading=false;
+    update();
+    return responseModel;
+}
+ Future<ResponseModel>OTPVerfication(OTP otp) async {
+     _isLoading=true;
+     update();
+     Response response =  await authRepo.otp(otp);
+     late ResponseModel responseModel;
+     if(response.statusCode==200){
+      print("2222222222222222");
+      responseModel=ResponseModel(true, 'sucess');
+     }
+    else{
+      print('333333333333333');
+      responseModel=ResponseModel(false, "something went wrong try again");
      }
     _isLoading=false;
     update();
@@ -37,7 +57,7 @@ class AuthController extends GetxController implements GetxService{
    late ResponseModel responseModel;
    if(response.statusCode==200){
      print('got here');
-     //authRepo.saveToken(response.body["access_token"]);
+     authRepo.saveToken(response.body["access_token"]);
      responseModel=ResponseModel(true, 'success');
    }
    else{
@@ -56,6 +76,7 @@ class AuthController extends GetxController implements GetxService{
    return authRepo.userLoggedIn();
  }
  bool clearSharedData(){
+   update();
    return authRepo.clearSharedData();
  }
 

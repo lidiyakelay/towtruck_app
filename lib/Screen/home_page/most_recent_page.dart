@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_state_manager/src/simple/get_state.dart';
+
+import 'package:towtruck_app/models/feed_model.dart';
 import 'package:get/route_manager.dart';
 import 'package:towtruck_app/Screen/detail_view_page/detail_view_page.dart';
+import 'package:towtruck_app/controllers/feed_controller.dart';
 
 class MostRecentPage extends StatefulWidget {
   const MostRecentPage({super.key});
@@ -49,18 +53,22 @@ class _MostRecentPageState extends State<MostRecentPage> {
       
           ),
           
-         Container(
-            height: 180,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-             
-            ),
-            child: PageView.builder(
-                    controller: pageController,
-                    itemCount: 5,
-                    itemBuilder: (context, Position){
-                      return _buildPageItem(Position);
-                    }),) ,
+         GetBuilder<FeedController>(
+           builder: (feedController) {
+             return feedController.isLoaded? Container(
+                height: 180,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                 
+                ),
+                child: PageView.builder(
+                        controller: pageController,
+                        itemCount: 5,
+                        itemBuilder: (context, Position){
+                          return _buildPageItem(Position,feedController.feedList[Position] );
+                        }),):CircularProgressIndicator( color:  Colors.amber,);
+           }
+         ) ,
         Container(
             margin:EdgeInsets.only(left: 30, right: 30, bottom: 10, top: 10),
             child: Text('Near Your Area', style:
@@ -85,7 +93,7 @@ class _MostRecentPageState extends State<MostRecentPage> {
     ;
   }
 
-   Widget _buildPageItem(int index){
+   Widget _buildPageItem(int index, FeedBody foodBody){
     Matrix4 matrix = new Matrix4.identity();
     if(index==currPageValue.floor()){
       var currScale= 1-(currPageValue-index)*(1-scaleFactor);

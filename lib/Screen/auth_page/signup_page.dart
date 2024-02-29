@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
+import 'package:towtruck_app/Screen/auth_page/otp_page.dart';
 import 'package:towtruck_app/Screen/home_page/home_page.dart';
 import 'package:towtruck_app/base/show_custom_snackbar.dart';
 import 'package:towtruck_app/controllers/auth_controller.dart';
@@ -53,7 +54,7 @@ class SignupPage extends StatelessWidget {
         SignUpBody signUpBody= SignUpBody(email: email, password: password, firstName: firstName, lastName: lastName, confirmPassword: confirmPassword, );
         authController.registration(signUpBody).then((status){
           if(status.isSuccess){
-            Get.to(HomePage());
+            Get.to(OTPScreen());
           }
           else{
             showCustomSnackbar(status.message);

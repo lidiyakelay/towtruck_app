@@ -1,6 +1,7 @@
 import 'package:get/get_connect/http/src/response/response.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:towtruck_app/api/api_client.dart';
+import 'package:towtruck_app/models/otp_body_model.dart';
 import 'package:towtruck_app/utils/app_constants.dart';
 
 import 'package:http/http.dart' as http;
@@ -17,9 +18,13 @@ class AuthRepo{
   Future<Response> login(SignInBody signInBody) async {
     return await apiClient.postData("https://tow.henonfm.com"+AppConstants.LoginUrl, signInBody.toJson());
   }
+  Future<Response> otp(OTP otp) async {
+    return await apiClient.postData("https://tow.henonfm.com"+AppConstants.OTPUrl, otp.toJson());
+  }
   Future<bool> saveToken(String token) async{
     apiClient.token=token;
     apiClient.updateHeader(token);
+    print(token);
     return await sharedPreferences.setString(AppConstants.Token, token);
   }
   Future<void> saveUserCredentials(SignInBody signInBody) async{

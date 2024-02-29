@@ -1,17 +1,11 @@
-import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:towtruck_app/Screen/auth_page/otp_page.dart';
 import 'package:towtruck_app/Screen/home_page/home_page.dart';
-import 'package:towtruck_app/Screen/auth_page/login_page.dart';
-import 'package:towtruck_app/Screen/auth_page/signup_page.dart';
-import 'package:towtruck_app/Screen/detail_view_page/detail_view_page.dart';
-import 'package:towtruck_app/Screen/detail_view_page/map_view_page.dart';
-import 'package:towtruck_app/Screen/home_page/most_recent_page.dart';
-import 'package:towtruck_app/Screen/home_page/main_page.dart';
 import 'package:towtruck_app/Screen/initial_pages/initial_page.dart';
-import 'package:towtruck_app/Screen/notification_page/notification_page.dart';
-import 'package:towtruck_app/Screen/publish_post_page/publish_post_page.dart';
-import 'package:towtruck_app/Screen/setting_page/setting_page.dart';
+import 'package:towtruck_app/controllers/auth_controller.dart';
+import 'package:towtruck_app/controllers/feed_controller.dart';
 import 'helper/dependecies.dart' as dep;
 
 Future <void> main() async {
@@ -19,10 +13,23 @@ Future <void> main() async {
   await dep.init();
   runApp(MyApp());
 }
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
+  Future<void> _loadResource() async   {
+    await Get.find<FeedController>().getFeedList();}
+    bool userLoggedIn=Get.find<AuthController>().userLoggedIn(); 
+  @override
+  void initState() {
+    super.initState();
+    _loadResource();
+  }
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
@@ -34,7 +41,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:InitialPage());
+      home: userLoggedIn?HomePage():InitialPage()
+      );
   }
 }
 
