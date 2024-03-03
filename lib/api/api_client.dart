@@ -17,6 +17,7 @@ class ApiClient extends GetConnect implements GetxService{
       'Authorization': 'Bearer $token'
     };
   }
+ 
   updateHeader(String token){
     _mainHeaders={
       
@@ -26,6 +27,7 @@ class ApiClient extends GetConnect implements GetxService{
   Future<Response> getData(String uri,{ Map<String, String>? headers}) async{
     try{
       print(token);
+      print(uri);
      Response response= await get(uri, headers:headers??_mainHeaders) ;
      return response;
     }
@@ -35,7 +37,19 @@ class ApiClient extends GetConnect implements GetxService{
   }
   Future<Response> postData(String uri, dynamic data)async{
     try{
-      Response response = await post(uri, data);
+      Response response = await post(uri, data, );
+      print(uri);
+      print(response.body);
+      print(response.statusCode);
+      return response;
+    }
+    catch(e){
+      return Response(statusCode: 1,statusText:e.toString());
+    }
+  }
+   Future<Response> publishData(String uri, dynamic data, { Map<String, String>? headers} )async{
+    try{
+      Response response = await post(uri, data,headers:headers??_mainHeaders );
       print(uri);
       print(response.body);
       print(response.statusCode);

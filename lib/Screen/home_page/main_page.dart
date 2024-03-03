@@ -1,4 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:towtruck_app/Screen/home_page/most_recent_page.dart';
 import 'package:towtruck_app/Screen/home_page/near_area_page.dart';
@@ -13,9 +17,14 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-
+  @override
+  void initState() {
+    super.initState();
+    _loadResource();
+  }
     Future<void> _loadResource() async   {
     await Get.find<FeedController>().getFeedList();}
+ 
     
   @override
   Widget build(BuildContext context) {
@@ -61,7 +70,7 @@ class _MainPageState extends State<MainPage> {
                                 children: [
                                 Icon(Icons.location_on, color: Colors.amber,size:20),
                                 SizedBox(width: 5,),
-                                Text('Alaska', style:
+                                Text("Alaska", style:
                                 TextStyle(
                                   color: Color.fromARGB(235, 237, 237, 237),
                                   fontWeight: FontWeight.w500,
@@ -120,7 +129,7 @@ class _MainPageState extends State<MainPage> {
               Expanded(child: SingleChildScrollView(
               child: Column(
                 children: [
-                  //MostRecentPage(),
+                  MostRecentPage(),
                   NearAreaPage(),
                    
                 ],

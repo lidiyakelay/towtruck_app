@@ -21,13 +21,13 @@ class AuthController extends GetxController implements GetxService{
      late ResponseModel responseModel;
      if(response.statusCode==201){
       print('success');
-       print('success'+response.body['token']);
+     //  print('success'+response.body['token']);
       //authRepo.saveToken(response.body['token']);
       responseModel=ResponseModel(true, 'sucess');
      }
     else{
       print('fail');
-      responseModel=ResponseModel(false, response.body[0][0]!);
+      responseModel=ResponseModel(false, response.statusText!);
      }
     _isLoading=false;
     update();

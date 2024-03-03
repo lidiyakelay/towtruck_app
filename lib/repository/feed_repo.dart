@@ -10,5 +10,5 @@ FeedRepo({required this.apiClient});
   Future<Response> getFeedList() async{
     return await apiClient.getData("https://tow.henonfm.com"+AppConstants.FeedUrl);
   }
-
+  
 }

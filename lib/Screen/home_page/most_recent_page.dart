@@ -17,6 +17,33 @@ class _MostRecentPageState extends State<MostRecentPage> {
    var currPageValue =0.0;
   double scaleFactor= 0.8;
   double height = 150;
+  String formattedDate="";
+    String formattedTime="";
+
+
+
+  // Parse the timestamp string
+  
+
+
+
+  String formatDate(DateTime dateTime) {
+  // Format the date part of the DateTime object
+  String formattedDate = "${dateTime.year}-${_twoDigits(dateTime.month)}-${_twoDigits(dateTime.day)}";
+  return formattedDate;
+}
+
+String formatTime(DateTime dateTime) {
+  // Format the time part of the DateTime object
+  String formattedTime = "${_twoDigits(dateTime.hour)}:${_twoDigits(dateTime.minute)}:${_twoDigits(dateTime.second)}.${dateTime.millisecond}";
+  return formattedTime;
+}
+
+String _twoDigits(int n) {
+  // Add leading zero if the number is less than 10
+  return n.toString().padLeft(2, '0');
+}
+
   @override
  void initState() {
     // TODO: implement initState
@@ -63,10 +90,10 @@ class _MostRecentPageState extends State<MostRecentPage> {
                 ),
                 child: PageView.builder(
                         controller: pageController,
-                        itemCount: 5,
+                        itemCount: feedController.feedList.length,
                         itemBuilder: (context, Position){
                           return _buildPageItem(Position,feedController.feedList[Position] );
-                        }),):CircularProgressIndicator( color:  Colors.amber,);
+                        }),):Center(child: CircularProgressIndicator( color:  Colors.amber,));
            }
          ) ,
         Container(
@@ -93,7 +120,12 @@ class _MostRecentPageState extends State<MostRecentPage> {
     ;
   }
 
-   Widget _buildPageItem(int index, FeedBody foodBody){
+   Widget _buildPageItem(int index, FeedBody feedBody){
+    DateTime timestamp = DateTime.parse(feedBody.timestamp!);
+
+  // Get date and time separately
+   formattedDate = formatDate(timestamp);
+  formattedTime = formatTime(timestamp);
     Matrix4 matrix = new Matrix4.identity();
     if(index==currPageValue.floor()){
       var currScale= 1-(currPageValue-index)*(1-scaleFactor);
@@ -144,7 +176,7 @@ class _MostRecentPageState extends State<MostRecentPage> {
             children: [
               GestureDetector(
                 
-                child: Container(
+                child: feedBody.photoUrl==null?Container(
                 height:130,
                 margin: EdgeInsets.only( right:20 ),
                 decoration: BoxDecoration(
@@ -154,7 +186,20 @@ class _MostRecentPageState extends State<MostRecentPage> {
                     color: index.isEven?Color(0XFF69c5df):Color(0XFF9492cc),
                     image: DecorationImage(
                       fit: BoxFit.cover,
-                      image:AssetImage('assets/images/truck.png'),
+                      image: AssetImage('assets/images/truck.png'),
+                    )
+                ),
+                      ):Container(
+                height:130,
+                margin: EdgeInsets.only( right:20 ),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(
+                          30
+                        ),
+                    color: index.isEven?Color.fromARGB(255, 46, 46, 46):Color.fromARGB(255, 200, 150, 0),
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: NetworkImage(feedBody.photoUrl!),
                     )
                 ),
                       ),
@@ -174,7 +219,7 @@ class _MostRecentPageState extends State<MostRecentPage> {
                         children: [
                           Icon(Icons.location_on, size:18,color: Colors.red,),
                           SizedBox(width: 5,),
-                          Text('Texas, Interstate 105 ...',style:
+                          Text(feedBody.location!.latitude.toString()+", "+feedBody.location!.longitude.toString(),style:
                             TextStyle(
                             color: Color.fromARGB(176, 0, 0, 0),
                             fontWeight: FontWeight.w500,
@@ -188,7 +233,7 @@ class _MostRecentPageState extends State<MostRecentPage> {
                         children: [
                           Icon(Icons.calendar_month,size: 18, color: Colors.green,),
                           SizedBox(width: 5,),
-                          Text('Jan 25 2024',style:
+                          Text(formattedDate,style:
                             TextStyle(
                             color: Color.fromARGB(176, 0, 0, 0),
                             fontWeight: FontWeight.w500,
@@ -206,7 +251,7 @@ class _MostRecentPageState extends State<MostRecentPage> {
                             children: [
                               Icon(Icons.lock_clock,size: 18, color: Colors.orange,),
                               SizedBox(width: 5,),
-                              Text('08:24 pm',style:
+                              Text(formattedTime,style:
                                 TextStyle(
                                 color: Color.fromARGB(176, 0, 0, 0),
                                 fontWeight: FontWeight.w500,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
+import 'package:towtruck_app/Screen/auth_page/signup_page.dart';
 import 'package:towtruck_app/Screen/home_page/home_page.dart';
 import 'package:towtruck_app/base/show_custom_snackbar.dart';
 import 'package:towtruck_app/controllers/auth_controller.dart';
@@ -142,12 +143,17 @@ class LoginPage extends StatelessWidget {
                         fontSize: 14,
                         decoration: TextDecoration.none),),
                         SizedBox(width: 5,),
-                         Text( "Sign Up", style:
-                        TextStyle(
-                        color: Colors.amber,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
-                        decoration: TextDecoration.none),),
+                         GestureDetector(
+                           onTap: () {
+                             Get.to(SignupPage());
+                           },
+                           child: Text( "Sign Up", style:
+                                                   TextStyle(
+                                                   color: Colors.amber,
+                                                   fontWeight: FontWeight.bold,
+                                                   fontSize: 14,
+                                                   decoration: TextDecoration.none),),
+                         ),
                       ],
                     )
                    ],

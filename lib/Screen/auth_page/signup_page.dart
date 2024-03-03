@@ -6,12 +6,45 @@ import 'package:towtruck_app/Screen/home_page/home_page.dart';
 import 'package:towtruck_app/base/show_custom_snackbar.dart';
 import 'package:towtruck_app/controllers/auth_controller.dart';
 import 'package:towtruck_app/models/signup_body_model.dart';
+import 'package:towtruck_app/utils/dimensions.dart';
 
-class SignupPage extends StatelessWidget {
+class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
 
   @override
+  State<SignupPage> createState() => _SignupPageState();
+}
+
+class _SignupPageState extends State<SignupPage> {
+  bool _keyboardVisible = false;
+ 
+  @override
   Widget build(BuildContext context) {
+     double height = 0;
+    double font = 0;
+    double top = 0;
+    double top2 = 0;
+    double height2=0;
+    _keyboardVisible = MediaQuery.of(context).viewInsets.bottom != 0;
+    setState(() {
+      if (_keyboardVisible) {
+        height2=40;
+        font=20;
+        height = 35;
+        top= 30;
+        top2=20;
+       
+      } else {
+        height2=50;
+        font=30;
+        height =45;
+        top=80;
+        top2=40;
+        
+      }
+    });
+
+
      var emailController= TextEditingController();
     var firstNameController= TextEditingController();
     var passwordController= TextEditingController();
@@ -70,12 +103,12 @@ class SignupPage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                SizedBox(height: 80,),
+                SizedBox(height: top,),
                 Text('Welcome to Lorem', style:
                    TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
-                    fontSize: 32,
+                    fontSize: font,
                     decoration: TextDecoration.none
                    ),),
                    Column(
@@ -83,7 +116,7 @@ class SignupPage extends StatelessWidget {
                         Padding(  
                       padding: EdgeInsets.only(left:30, right: 30, top: 30),  
                       child: SizedBox(
-                        height: 45,
+                        height:  height,
                         child: TextField(  
                           controller: emailController,
                           style: TextStyle(fontSize: 12),
@@ -105,9 +138,9 @@ class SignupPage extends StatelessWidget {
                       ),  
                     ),
                         Padding(  
-                      padding: EdgeInsets.only(left:30, right: 30, top: 30),  
+                      padding: EdgeInsets.only(left:30, right: 30, top: 20),  
                       child: SizedBox(
-                        height: 45,
+                        height: height,
                         child: TextField(  
                           controller: passwordController,
                           obscureText: true,  
@@ -130,9 +163,9 @@ class SignupPage extends StatelessWidget {
                       ),  
                     ),
                      Padding(  
-                      padding: EdgeInsets.only(left:30, right: 30, top: 30),  
+                      padding: EdgeInsets.only(left:30, right: 30, top: 20),  
                       child: SizedBox(
-                        height: 45,
+                        height: height,
                         child: TextField(  
                           controller: firstNameController,
                           style: TextStyle(fontSize: 12),
@@ -154,9 +187,9 @@ class SignupPage extends StatelessWidget {
                       ),  
                     ),
                      Padding(  
-                      padding: EdgeInsets.only(left:30, right: 30, top: 30),  
+                      padding: EdgeInsets.only(left:30, right: 30, top: 20),  
                       child: SizedBox(
-                        height: 45,
+                        height: height,
                         child: TextField(  
                           controller: lastNameController,
                           style: TextStyle(fontSize: 12),
@@ -178,9 +211,9 @@ class SignupPage extends StatelessWidget {
                       ),  
                     ),
                     Padding(  
-                      padding: EdgeInsets.only(left:30, right: 30, top: 30),  
+                      padding: EdgeInsets.only(left:30, right: 30, top: 20),  
                       child: SizedBox(
-                        height: 45,
+                        height: height,
                         child: TextField(  
                           controller: confirmpasswordController,
                           style: TextStyle(fontSize: 12),
@@ -205,13 +238,13 @@ class SignupPage extends StatelessWidget {
                  
                     ],
                    ),
-                   SizedBox(height: 50,),
+                   SizedBox(height: top2,),
                    GestureDetector(
                     onTap: () {
                        registration(authController);
                     },
                      child: Container(
-                        height: 50,
+                        height: height2,
                         width: double.maxFinite,
                         margin: EdgeInsets.only(left: 30,right: 30, top: 10, bottom: 10),
                         decoration: BoxDecoration(

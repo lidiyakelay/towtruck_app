@@ -16,9 +16,9 @@ class FeedBody {
       this.location,
       this.description});
 
-  FeedBody.fromJson(Map<String, dynamic> json) {
+    FeedBody.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    user = json['user'] ;
+    user = json['user'] != null ? new User.fromJson(json['user']) : null;
     photoUrl = json['photo_url'];
     image = json['image'];
     timestamp = json['timestamp'];
@@ -54,8 +54,8 @@ class Location {
   Location({this.latitude, this.longitude});
 
   Location.fromJson(Map<String, dynamic> json) {
-    latitude = json['latitude'];
-    longitude = json['longitude'];
+    latitude = json['latitude'].toDouble();
+    longitude = json['longitude'].toDouble();
   }
 
   Map<String, dynamic> toJson() {
