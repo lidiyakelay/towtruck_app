@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_map/flutter_map.dart';
 import 'package:get/route_manager.dart';
+import 'package:latlong2/latlong.dart';
 
 class MapViewPage extends StatefulWidget {
   const MapViewPage({super.key});
@@ -9,6 +11,10 @@ class MapViewPage extends StatefulWidget {
 }
 
 class _MapViewPageState extends State<MapViewPage> {
+  final MapController controller = MapController(); 
+    
+  // Change as per your need 
+  LatLng latLng = const LatLng(40.7128, -74.0060);  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,75 +22,35 @@ class _MapViewPageState extends State<MapViewPage> {
       children: [
         Stack(
        children: [
-        Container(
-                         height: 100,
-                         color: Colors.black,
-                      ),
-         Container(
-          margin: EdgeInsets.only(top: 30),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.only(topLeft: Radius.circular(30),
-            topRight: Radius.circular(30)),
-            image: DecorationImage(
-              fit: BoxFit.cover,
-              image: AssetImage('assets/images/map.png')
-            )
-          ),
-        ),
-        Container(
+    
+         FlutterMap( 
+      mapController: controller, 
+      options: MapOptions( 
+        initialCenter: latLng, 
+        initialZoom: 18, 
+      ), 
+      children: [ 
+        TileLayer( 
+          urlTemplate: "https://api.mapbox.com/styles/v1/towsnitch/cltyw15z901il01nrh9ibakb6/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoidG93c25pdGNoIiwiYSI6ImNsdHEyczdnOTAxdGIyaXFhdWp1end3M2QifQ.Rswmxd0XKpN8oXwOWHxq3A",
+          additionalOptions: {
+            'accessToken':'pk.eyJ1IjoidG93c25pdGNoIiwiYSI6ImNsdHEyczdnOTAxdGIyaXFhdWp1end3M2QifQ.Rswmxd0XKpN8oXwOWHxq3A',
+            'id':'mapbox.mapbox-streets-v8'
+          },
+        ), 
+      ], 
+    ),
+        /* Container(
           margin: EdgeInsets.only(top: 30),
           padding: EdgeInsets.only(top: 20, left: 20, right: 20) ,
           decoration: BoxDecoration(
                borderRadius: BorderRadius.only(topLeft: Radius.circular(30),
             topRight: Radius.circular(30)),
-              color: Color.fromARGB(87, 0, 0, 0),
           ),
         
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Get.back();
-                    },
-                    child: CircleAvatar(
-                         radius: 25,
-                        backgroundColor: Color.fromARGB(153, 7, 7, 7),
-                         child: Icon(Icons.arrow_back, color: Colors.amber,size:20)),
-                  ),
-                   Container(  
-                    width: MediaQuery.of(context).size.width/1.3,
-                        padding: EdgeInsets.only(left:20, right: 20, top: 10),  
-                        child: TextField(  
-                          style: TextStyle(fontSize: 12),
-                          cursorColor: Colors.grey,
-                          obscureText: true,  
-                          decoration: InputDecoration(
-                            contentPadding: EdgeInsets.only(top: 2, bottom: 2, left: 5, right: 5),
-                            filled: true,
-                            hintText: ('Search by place'),
-                             hintStyle: TextStyle(
-                              fontSize: 14,
-                           color: Color.fromARGB(207, 255, 255, 255),), 
-                            fillColor: Color.fromARGB(153, 7, 7, 7),  
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(30.0),
-                          borderSide: BorderSide(width: 1, color: const Color.fromARGB(0, 158, 158, 158)), ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(30.0),
-                          borderSide: BorderSide(width: 1, color: Colors.grey), ),
-                            border: OutlineInputBorder(),  
-                            
-                            prefixIcon: Icon(Icons.search, color: Colors.amber,),
-                            
-                          ),  
-                        ),  
-                      ),  
-                ],
-              ),
+             
               Container(
           margin: EdgeInsets.only(left: 10,right: 10, bottom: 50),
           height:80 ,
@@ -158,7 +124,7 @@ class _MapViewPageState extends State<MapViewPage> {
           )
             ],
           ),
-        ),
+        ), */
        ],
     ),
       
