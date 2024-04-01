@@ -48,8 +48,10 @@ dependencies:
   geocoding: ^2.0.4
   page_view_dot_indicator: any
   otp_pin_field: ^1.2.2
-  flutter_map:
+  flutter_map: 
   latlong2:
+  
+
 
 
 dev_dependencies:

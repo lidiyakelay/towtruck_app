@@ -3,6 +3,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:towtruck_app/api/api_client.dart';
 import 'package:towtruck_app/controllers/feed_controller.dart';
+import 'package:towtruck_app/controllers/location_controller.dart';
 import 'package:towtruck_app/controllers/publish_Controller.dart';
 import 'package:towtruck_app/repository/auth_repo.dart';
 import 'package:towtruck_app/repository/feed_repo.dart';
@@ -22,6 +23,7 @@ Future <void> init()async{
   Get.lazyPut(() => FeedRepo(apiClient: Get.find()) );
   Get.lazyPut(() => PublishController(publishRepo: Get.find()));
   Get.lazyPut(() => PublishRepo(apiClient: Get.find()) );
+  Get.lazyPut(() => LocationController()); 
 
 
 }

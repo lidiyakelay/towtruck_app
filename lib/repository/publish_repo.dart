@@ -7,7 +7,7 @@ class PublishRepo extends GetxService{
   final ApiClient apiClient;
 PublishRepo({required this.apiClient});
   Future<Response> publishData(PublishData publishData) async{
-    return await apiClient.publishData("https://tow.henonfm.com"+AppConstants.PhotoUrl, publishData.toJson());
+    return await apiClient.publishData(AppConstants.BaseUrl+AppConstants.PhotoUrl, publishData.toJson());
   }
 
 }

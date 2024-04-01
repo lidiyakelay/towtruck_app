@@ -13,13 +13,14 @@ class AuthRepo{
   SharedPreferences sharedPreferences;
   AuthRepo({required this.apiClient, required this.sharedPreferences});
   Future<Response> registration(SignUpBody signUpBody) async {
-    return await apiClient.postData("https://tow.henonfm.com"+AppConstants.RegisterUrl, signUpBody.toJson());
+    return await apiClient.postData(AppConstants.BaseUrl+AppConstants.RegisterUrl, signUpBody.toJson());
   }
   Future<Response> login(SignInBody signInBody) async {
-    return await apiClient.postData("https://tow.henonfm.com"+AppConstants.LoginUrl, signInBody.toJson());
+    print(AppConstants.BaseUrl+AppConstants.LoginUrl);
+    return await apiClient.postData(AppConstants.BaseUrl+AppConstants.LoginUrl, signInBody.toJson());
   }
   Future<Response> otp(OTP otp) async {
-    return await apiClient.postData("https://tow.henonfm.com"+AppConstants.OTPUrl, otp.toJson());
+    return await apiClient.postData(AppConstants.BaseUrl+AppConstants.OTPUrl, otp.toJson());
   }
   Future<bool> saveToken(String token) async{
     apiClient.token=token;

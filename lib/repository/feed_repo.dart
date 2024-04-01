@@ -8,7 +8,7 @@ class FeedRepo extends GetxService{
   final ApiClient apiClient;
 FeedRepo({required this.apiClient});
   Future<Response> getFeedList() async{
-    return await apiClient.getData("https://tow.henonfm.com"+AppConstants.FeedUrl);
+    return await apiClient.getData(AppConstants.BaseUrl+AppConstants.FeedUrl);
   }
   
 }

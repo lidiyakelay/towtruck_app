@@ -10,12 +10,28 @@ import 'package:towtruck_app/Screen/notification_page/notification_page.dart';
 import 'package:towtruck_app/Screen/publish_post_page/publish_post_page.dart';
 import 'package:towtruck_app/Screen/setting_page/setting_page.dart';
 import 'package:towtruck_app/controllers/auth_controller.dart';
+import 'package:towtruck_app/controllers/feed_controller.dart';
+import 'package:towtruck_app/controllers/location_controller.dart';
 import 'package:towtruck_app/models/signin_body_model.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
  
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  Future<void> _loadResource() async   {
+    await  Get.find<LocationController>().getCurrentPosition();
+    print(Get.find<LocationController>().location);}
   
+  @override
+  void initState() {
+    super.initState();
+    _loadResource();
+  }
   @override
   Widget build(BuildContext context) {
      PersistentTabController _controller;
@@ -59,13 +75,12 @@ class HomePage extends StatelessWidget {
     List<Widget> _buildScreens() {
         return [
           MainPage(),
-          PublishPostPage(),
+         PublishPostPage(),
           MapViewPage(),
           NotificationPage(),
           SettingPage()
         ];
     }
-
 
     List<PersistentBottomNavBarItem> _navBarsItems() {
         return [
@@ -101,6 +116,4 @@ class HomePage extends StatelessWidget {
             ),
         ];
     }
-
-
 }

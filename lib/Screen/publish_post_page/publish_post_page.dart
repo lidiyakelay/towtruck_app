@@ -8,6 +8,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:towtruck_app/Components/big_text.dart';
 import 'package:towtruck_app/base/show_custom_snackbar.dart';
+import 'package:towtruck_app/controllers/location_controller.dart';
 import 'package:towtruck_app/controllers/publish_Controller.dart';
 import 'package:towtruck_app/models/publish_data_model.dart';
 import 'package:towtruck_app/utils/dimensions.dart';
@@ -22,8 +23,6 @@ class PublishPostPage extends StatefulWidget {
 class _PublishPostPageState extends State<PublishPostPage> {
   ImagePicker picker = ImagePicker();
   XFile? image;
-  String? _currentAddress;
-  Position? _currentPosition;
   var pickedFile=null;
   var descriptionController=TextEditingController();
 
@@ -44,63 +43,10 @@ class _PublishPostPageState extends State<PublishPostPage> {
       });
     }
 
-  Future<bool> _handleLocationPermission() async {
-    bool serviceEnabled;
-    LocationPermission permission;
-
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text(
-              'Location services are disabled. Please enable the services')));
-      return false;
-    }
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Location permissions are denied')));
-        return false;
-      }
-    }
-    if (permission == LocationPermission.deniedForever) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text(
-              'Location permissions are permanently denied, we cannot request permissions.')));
-      return false;
-    }
-    return true;
-  }
-
-  Future<void> _getCurrentPosition() async {
-    final hasPermission = await _handleLocationPermission();
-
-    if (!hasPermission) return;
-    await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
-        .then((Position position) {
-      setState(() => _currentPosition = position);
-      _getAddressFromLatLng(_currentPosition!);
-    }).catchError((e) {
-      debugPrint(e);
-    });
-  }
-
-  Future<void> _getAddressFromLatLng(Position position) async {
-    await placemarkFromCoordinates(
-            _currentPosition!.latitude, _currentPosition!.longitude)
-        .then((List<Placemark> placemarks) {
-      Placemark place = placemarks[0];
-      setState(() {
-        _currentAddress =
-            '${place.street}, ${place.subLocality}, ${place.subAdministrativeArea}, ${place.postalCode}';
-      });
-    }).catchError((e) {
-      debugPrint(e);
-    });
-  }
+  
   @override
   Widget build(BuildContext context) {
+    var location= Get.find<LocationController>().location;
     return GetBuilder<PublishController>(
       builder: (publishController) {
         return 
@@ -258,92 +204,97 @@ class _PublishPostPageState extends State<PublishPostPage> {
                     
                              ],
                     ),
-                 Column(
-                   children: [
-                       Container(
-                              height: 40,
-                              width: double.maxFinite,
-                              padding: EdgeInsets.only(left: 10, right: 10),
-                              margin: EdgeInsets.only(left: 30,right: 30, top: 10, bottom: 10),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Color.fromARGB(63, 255, 255, 255),
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Icon(Icons.location_on, color: Colors.red,),
-                                  Text('LAT: ${_currentPosition?.latitude ?? ""}',style:
-                                               TextStyle(
-                                                color: Color.fromARGB(226, 255, 255, 255) ,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 12,
-                                                decoration: TextDecoration.none
-                                               ), ),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              height: 40,
-                              width: double.maxFinite,
-                              padding: EdgeInsets.only(left: 10, right: 10),
-                              margin: EdgeInsets.only(left: 30,right: 30, top: 10, bottom: 10),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Color.fromARGB(63, 255, 255, 255),
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Icon(Icons.location_on, color: Colors.red,),
-                                  Text('LNG: ${_currentPosition?.longitude ?? ""}',style:
-                                               TextStyle(
-                                                color: Color.fromARGB(226, 255, 255, 255) ,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 12,
-                                                decoration: TextDecoration.none
-                                               ), ),
-                                ],
-                              ),
-                            ),
-                         
-                           
-                   
-                        
-                       Padding(  
-                      
-                              padding: EdgeInsets.only(left:30, right: 30, top: 10),  
-                              child: TextField(  
-                                controller: descriptionController,
-                                style: TextStyle(fontSize: 12, color: Colors.white),
-                                cursorColor: Colors.grey,
-                                obscureText: false,  
-                                decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.only(top: 2, bottom: 2, left: 5, right: 5),
-                                  hintText: 'Description',
-                                  filled: true,
-                                  fillColor: Color.fromARGB(63, 255, 255, 255),  
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                borderSide: BorderSide(width: 1, color: const Color.fromARGB(0, 158, 158, 158)), ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                borderSide: BorderSide(width: 1, color: Colors.grey), ),
-                                  border: OutlineInputBorder(),  
-                                  prefixIcon: Icon(Icons.edit, color: Colors.white,),
-                                   hintStyle: TextStyle(
-                                    fontSize: 14,
-                                 color: Color.fromARGB(207, 255, 255, 255),  ),
-                                ),  
-                              ),  
-                            ),
-                
-                   ],
+                 GetBuilder<LocationController>(
+                   builder: (locationController) {
+                     return Column(
+                       children: [
+                           Container(
+                                  height: 40,
+                                  width: double.maxFinite,
+                                  padding: EdgeInsets.only(left: 10, right: 10),
+                                  margin: EdgeInsets.only(left: 30,right: 30, top: 10, bottom: 10),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: Color.fromARGB(63, 255, 255, 255),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Icon(Icons.location_on, color: Colors.red,),
+                                      Text('LAT: ${locationController.location!.latitude ?? ""}',style:
+                                                   TextStyle(
+                                                    color: Color.fromARGB(226, 255, 255, 255) ,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 12,
+                                                    decoration: TextDecoration.none
+                                                   ), ),
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  height: 40,
+                                  width: double.maxFinite,
+                                  padding: EdgeInsets.only(left: 10, right: 10),
+                                  margin: EdgeInsets.only(left: 30,right: 30, top: 10, bottom: 10),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: Color.fromARGB(63, 255, 255, 255),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Icon(Icons.location_on, color: Colors.red,),
+                                      Text('LNG: ${locationController.location!.longitude ?? ""}',style:
+                                                   TextStyle(
+                                                    color: Color.fromARGB(226, 255, 255, 255) ,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 12,
+                                                    decoration: TextDecoration.none
+                                                   ), ),
+                                    ],
+                                  ),
+                                ),
+                             
+                               
+                       
+                            
+                           Padding(  
+                          
+                                  padding: EdgeInsets.only(left:30, right: 30, top: 10),  
+                                  child: TextField(  
+                                    controller: descriptionController,
+                                    style: TextStyle(fontSize: 12, color: Colors.white),
+                                    cursorColor: Colors.grey,
+                                    obscureText: false,  
+                                    decoration: InputDecoration(
+                                      contentPadding: EdgeInsets.only(top: 2, bottom: 2, left: 5, right: 5),
+                                      hintText: 'Description',
+                                      filled: true,
+                                      fillColor: Color.fromARGB(63, 255, 255, 255),  
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    borderSide: BorderSide(width: 1, color: const Color.fromARGB(0, 158, 158, 158)), ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    borderSide: BorderSide(width: 1, color: Colors.grey), ),
+                                      border: OutlineInputBorder(),  
+                                      prefixIcon: Icon(Icons.edit, color: Colors.white,),
+                                       hintStyle: TextStyle(
+                                        fontSize: 14,
+                                     color: Color.fromARGB(207, 255, 255, 255),  ),
+                                    ),  
+                                  ),  
+                                ),
+                                     
+                       ],
+                     );
+                   }
                  ),
    GestureDetector(
                           onTap: () {
-                            _getCurrentPosition();
                             
+                            Get.find<LocationController>().getCurrentPosition();
+                            print(  Get.find<LocationController>().location);
                           },
                            child: Container(
                               height: 40,
@@ -367,7 +318,7 @@ class _PublishPostPageState extends State<PublishPostPage> {
 
                  GestureDetector(
                   onTap: () {
-                    publish(publishController);
+                    publish(publishController, location!);
                   },
                    child: Container(
                         height: 50,
@@ -396,9 +347,9 @@ class _PublishPostPageState extends State<PublishPostPage> {
       }
     );
   }
- void publish(PublishController  publishController){
-      double lat= _currentPosition!.latitude;
-      double long = _currentPosition!.longitude;
+ void publish(PublishController  publishController, Position location){
+      double lat= location!.latitude;
+      double long =location!.longitude;
       String description= descriptionController.text.trim();
      
      if(long==null && lat==null){

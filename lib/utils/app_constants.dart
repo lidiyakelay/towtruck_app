@@ -1,7 +1,7 @@
 class AppConstants {
   static const String AppName= "DBFood";
   static const int AppVersion= 1;
-  static const String BaseUrl="https://tow.henonfm.com";
+  static const String BaseUrl="http://tow.premiumautoet.com";
   static const String FeedUrl = "/api/photo/feed/";
   static const String PhotoUrl = "/api/photo/";
   static const String RegisterUrl = "/api/v/auth/register/";
