@@ -6,6 +6,8 @@ import 'package:towtruck_app/Screen/detail_view_page/detail_view_page.dart';
 import 'package:towtruck_app/controllers/feed_controller.dart';
 import 'package:towtruck_app/controllers/location_controller.dart';
 
+import '../../models/feed_model.dart';
+
 class NearAreaPage extends StatefulWidget {
   const NearAreaPage({super.key});
 
@@ -15,15 +17,18 @@ class NearAreaPage extends StatefulWidget {
 
 class _NearAreaPageState extends State<NearAreaPage> {
   Position? userLocation;
+  late List<Location> locations;
     void initState() {
     super.initState();
     userLocation = Get.find<LocationController>().location;
-  }
+     }
   @override
   Widget build(BuildContext context) {
     return GetBuilder<FeedController>(
       builder: (feedController) {
-        return feedController.locationList==null? CircularProgressIndicator():Column(
+        if(feedController.filteredLocations!=null){
+          feedController.filterLocationsInRange(locations, userLocation!.latitude, userLocation!.longitude, 10000);
+        return feedController.locationList==null? Center(child: CircularProgressIndicator()):Column(
           children: List.generate(5, (index) {
             return GestureDetector(
               onTap: () {
@@ -103,6 +108,10 @@ class _NearAreaPageState extends State<NearAreaPage> {
             );
             }),
           );
+      }
+      else{
+        return Center(child: CircularProgressIndicator());
+      }
       }
     );
   }

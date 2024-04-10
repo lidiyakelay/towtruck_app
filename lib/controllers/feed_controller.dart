@@ -13,6 +13,7 @@ class FeedController extends GetxController {
   List <Location> _locationList = [];
   List <Location> get locationList =>  _locationList;
   List <dynamic>_feedList1=[] ;
+   List<Location> filteredLocations = [];
   bool _isLoaded = false;
   bool get isLoaded=> _isLoaded;
 
@@ -59,13 +60,13 @@ class FeedController extends GetxController {
     // Convert the distance from meters to kilometers
     return distanceInMeters;
   } 
-  Future<List<LatLng>> filterLocationsInRange(
-      List<LatLng> locations, double myLatitude, double myLongitude, double rangeInMeters) async {
-    List<LatLng> filteredLocations = [];
+  Future<List<Location>> filterLocationsInRange(
+    List<Location> locations, double myLatitude, double myLongitude, double rangeInMeters) async {
+    filteredLocations = [];
 
-    for (LatLng location in locations) {
+    for (Location location in locations) {
       double distance = await calculateDistance(
-          myLatitude, myLongitude, location.latitude, location.longitude);
+          myLatitude, myLongitude, location.latitude!, location.longitude!);
       if (distance <= rangeInMeters) {
         filteredLocations.add(location);
       }
