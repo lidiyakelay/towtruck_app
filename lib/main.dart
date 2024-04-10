@@ -45,10 +45,7 @@ class _MyAppState extends State<MyApp> {
         useMaterial3: true,
       ),
       home: userLoggedIn?HomePage():InitialPage(),
-       initialBinding: BindingsBuilder(() { 
-        // Bind the Controller to the Get instance 
-      
-      })
+       
       );
   }
 }

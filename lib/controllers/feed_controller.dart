@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:towtruck_app/models/feed_model.dart';
 import 'package:towtruck_app/repository/feed_repo.dart';
 
@@ -8,6 +10,8 @@ class FeedController extends GetxController {
  FeedController ({required this.feedRepo});
   List <FeedBody> _feedList = [];
   List <FeedBody> get feedList =>  _feedList;
+  List <Location> _locationList = [];
+  List <Location> get locationList =>  _locationList;
   List <dynamic>_feedList1=[] ;
   bool _isLoaded = false;
   bool get isLoaded=> _isLoaded;
@@ -27,6 +31,7 @@ class FeedController extends GetxController {
       
       print(_feedList);
       _isLoaded = true;
+      getLocation(_feedList);
       update();
 
     }
@@ -35,5 +40,37 @@ class FeedController extends GetxController {
       print('did not get product');
     }
  }
+ 
+ List<Location> getLocation( List<FeedBody> feedBody){
+     for(int i=0; i<_feedList1.length; i++){
+        print("got here");
+        _locationList.add(FeedBody.fromJson(_feedList1[i]).location!);
+      }
+    return _locationList;
+ }
+ Future<double> calculateDistance(
+      double myLatitude, double myLongitude, double lat, double long) async {
+    double distanceInMeters = await Geolocator.distanceBetween(
+      myLatitude,
+      myLongitude,
+      lat,
+      long,
+    );
+    // Convert the distance from meters to kilometers
+    return distanceInMeters;
+  } 
+  Future<List<LatLng>> filterLocationsInRange(
+      List<LatLng> locations, double myLatitude, double myLongitude, double rangeInMeters) async {
+    List<LatLng> filteredLocations = [];
 
-}
+    for (LatLng location in locations) {
+      double distance = await calculateDistance(
+          myLatitude, myLongitude, location.latitude, location.longitude);
+      if (distance <= rangeInMeters) {
+        filteredLocations.add(location);
+      }
+    }
+
+    return filteredLocations;
+  
+}}
