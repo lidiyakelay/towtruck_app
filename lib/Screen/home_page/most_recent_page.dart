@@ -82,7 +82,7 @@ String _twoDigits(int n) {
           
          GetBuilder<FeedController>(
            builder: (feedController) {
-             return feedController.isLoaded? Container(
+             return feedController.isLoaded? feedController.feedList!=null? Container(
                 height: 180,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
@@ -93,7 +93,7 @@ String _twoDigits(int n) {
                         itemCount: feedController.feedList.length,
                         itemBuilder: (context, Position){
                           return _buildPageItem(Position,feedController.feedList[Position] );
-                        }),):Center(child: CircularProgressIndicator( color:  Colors.amber,));
+                        }),):Center(child: CircularProgressIndicator( color:  Colors.amber,)): Center(child: CircularProgressIndicator( color:  Colors.amber,));
            }
          ) ,
         Container(

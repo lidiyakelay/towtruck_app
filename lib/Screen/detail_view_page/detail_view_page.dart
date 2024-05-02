@@ -3,7 +3,8 @@ import 'package:get/route_manager.dart';
 import 'package:towtruck_app/Screen/detail_view_page/map_view_page.dart';
 
 class DetailViewPage extends StatelessWidget {
-  const DetailViewPage({super.key});
+
+   DetailViewPage({super.key});
 
   @override
   Widget build(BuildContext context) {

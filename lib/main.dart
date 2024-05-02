@@ -23,11 +23,23 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
+    bool userLoggedIn=Get.find<AuthController>().userLoggedIn();
   Future<void> _loadResource() async   {
-    await Get.find<FeedController>().getFeedList();
-    await  Get.find<LocationController>().getCurrentPosition();
-    print(Get.find<LocationController>().location);}
-    bool userLoggedIn=Get.find<AuthController>().userLoggedIn(); 
+    if(userLoggedIn){
+       await  Get.find<LocationController>().getCurrentPosition();
+       print(Get.find<LocationController>().location);
+       await Get.find<FeedController>().getFeedList();
+       var locationController = await  Get.find<LocationController>().location;
+       var locationList =  await Get.find<FeedController>().feedList;
+       await Get.find<FeedController>().filterLocationsInRange(locationList, locationController!.latitude, locationController!.longitude, 20000);
+    }
+    else{
+      await  Get.find<LocationController>().getCurrentPosition();
+       print(Get.find<LocationController>().location);
+    }
+   
+          }
+  
   @override
   void initState() {
     super.initState();

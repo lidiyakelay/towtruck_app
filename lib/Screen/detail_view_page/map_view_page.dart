@@ -31,7 +31,7 @@ class _MapViewPageState extends State<MapViewPage> {
   @override
   void initState() {
     super.initState();
-    userLocation = Get.find<LocationController>().location;
+  
   }
   
   double calculateZoomLevel(double radius) {
@@ -100,8 +100,8 @@ class _MapViewPageState extends State<MapViewPage> {
                             // Add user's location as a marker
                             Marker(
                               point: LatLng(
-                                userLocation!.latitude,
-                                userLocation!.longitude,
+                               locationController.location!.latitude,
+                                locationController.location!.longitude,
                               ),
                               child: Icon(
                                 Icons.person_pin_circle,
@@ -113,8 +113,8 @@ class _MapViewPageState extends State<MapViewPage> {
                             ...locations
                                 .where((location) =>
                                     Geolocator.distanceBetween(
-                                            userLocation!.latitude,
-                                            userLocation!.longitude,
+                                            locationController.location!.latitude,
+                                            locationController.location!.longitude,
                                             location.latitude,
                                             location.longitude) <=
                                         radius)
@@ -132,8 +132,8 @@ class _MapViewPageState extends State<MapViewPage> {
                           circles: [
                             CircleMarker(
                               point: LatLng(
-                                userLocation!.latitude,
-                                userLocation!.longitude,
+                                locationController.location!.latitude,
+                                 locationController.location!.longitude,
                               ),
                               radius: calculateCircleRadius(radius,zoom),
                               color: Colors.blue.withOpacity(0.3),
@@ -176,8 +176,8 @@ class _MapViewPageState extends State<MapViewPage> {
                               radius = value;
                               controller.move(
                                 LatLng(
-                                  userLocation!.latitude,
-                                  userLocation!.longitude,
+                                  locationController.location!.latitude,
+                                  locationController.location!.longitude,
                                 ),
                                 calculateZoomLevel(radius),
                               );

@@ -5,6 +5,8 @@ import 'package:towtruck_app/Screen/auth_page/signup_page.dart';
 import 'package:towtruck_app/Screen/home_page/home_page.dart';
 import 'package:towtruck_app/base/show_custom_snackbar.dart';
 import 'package:towtruck_app/controllers/auth_controller.dart';
+import 'package:towtruck_app/controllers/feed_controller.dart';
+import 'package:towtruck_app/controllers/location_controller.dart';
 import 'package:towtruck_app/models/signin_body_model.dart';
 
 class LoginPage extends StatelessWidget {
@@ -12,6 +14,14 @@ class LoginPage extends StatelessWidget {
   Future<bool> _onWillPop() async {
     return false; //<-- SEE HERE
   }
+   Future<void> _loadResource() async   {
+    await  Get.find<LocationController>().getCurrentPosition();
+    print(Get.find<LocationController>().location);
+     await Get.find<FeedController>().getFeedList();
+     var locationController = await  Get.find<LocationController>().location;
+     var locationList =  await Get.find<FeedController>().feedList;
+    await Get.find<FeedController>().filterLocationsInRange(locationList, locationController!.latitude, locationController!.longitude, 20000);
+          }
   @override
   Widget build(BuildContext context) {
     var phoneController= TextEditingController();
@@ -33,13 +43,16 @@ class LoginPage extends StatelessWidget {
       else{
         SignInBody signInBody= SignInBody(phone: phone, password: password,);
         print(phone +"    "+ password);
-        authController.login(signInBody).then((status){
+        authController.login(signInBody).then((status) async {
           if(status.isSuccess){
             print('here successs');
-            Get.to(HomePage());
+            Get.to(() =>HomePage());
+            await _loadResource();
+            
           }
           else{
             showCustomSnackbar(status.message);
+            
             print('here unsuccesss');
           }
         });

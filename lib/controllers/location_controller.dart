@@ -48,6 +48,7 @@ class LocationController extends GetxController {
     }).catchError((e) {
       debugPrint(e);
     });
+    update();
   }
 
   Future<void> _getAddressFromLatLng(Position position) async {

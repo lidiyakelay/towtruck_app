@@ -5,6 +5,8 @@ import 'package:towtruck_app/Screen/auth_page/otp_page.dart';
 import 'package:towtruck_app/Screen/home_page/home_page.dart';
 import 'package:towtruck_app/base/show_custom_snackbar.dart';
 import 'package:towtruck_app/controllers/auth_controller.dart';
+import 'package:towtruck_app/controllers/feed_controller.dart';
+import 'package:towtruck_app/controllers/location_controller.dart';
 import 'package:towtruck_app/models/signup_body_model.dart';
 import 'package:towtruck_app/utils/dimensions.dart';
 
@@ -17,7 +19,14 @@ class SignupPage extends StatefulWidget {
 
 class _SignupPageState extends State<SignupPage> {
   bool _keyboardVisible = false;
- 
+ Future<void> _loadResource() async   {
+    await  Get.find<LocationController>().getCurrentPosition();
+    print(Get.find<LocationController>().location);
+     await Get.find<FeedController>().getFeedList();
+     var locationController = await  Get.find<LocationController>().location;
+     var locationList =  await Get.find<FeedController>().feedList;
+    await Get.find<FeedController>().filterLocationsInRange(locationList, locationController!.latitude, locationController!.longitude, 20000);
+          }
   @override
   Widget build(BuildContext context) {
      double height = 0;
@@ -85,8 +94,9 @@ class _SignupPageState extends State<SignupPage> {
       }
       else{
         SignUpBody signUpBody= SignUpBody(email: email, password: password, firstName: firstName, lastName: lastName, confirmPassword: confirmPassword, );
-        authController.registration(signUpBody).then((status){
+        authController.registration(signUpBody).then((status) async {
           if(status.isSuccess){
+             await _loadResource();
             Get.to(OTPScreen());
           }
           else{
